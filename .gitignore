@@ -1,0 +1,15 @@
+bin/
+obj/
+*.exe
+*.o
+*.obj
+*.out
+*.layout
+*.depend
+*.dll
+*.a
+*.lib
+Thumbs.db
+desktop.ini
+*.log
+*.tmp
