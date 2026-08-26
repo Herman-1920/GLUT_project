@@ -69,7 +69,7 @@ void drawBullet(float x,float y){
 
 // bg
 void drawStars(){
-
+    // abracadabra i love you maisha 
 }
 
 // health
