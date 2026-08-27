@@ -133,8 +133,14 @@ void keyDown(unsigned char key,int x,int y){
     }
 }
 void keyUp(unsigned char key,int x,int y){
-
+    if(key=='a' || key=='A'){
+        leftKey=false;
+    }
+    if(key=='d' || key=='D'){
+        rightKey=false;
+    }
 }
+
 void specialDown(int key,int x,int y){
 
 }
