@@ -93,7 +93,7 @@ void drawHealth(){
     char t[50];
     sprintf(t,"Health: %d",health);
     glRasterPos2f(20,HEIGHT-50);
-    for (int i=0;t[i]!='\0';i++){
+    for(int i=0;t[i]!='\0';i++){
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12,t[i]);
     }
 }
@@ -107,10 +107,30 @@ void display(){
 void update(int value){
 
 }
-
-// key operation
 void keyDown(unsigned char key,int x,int y){
-
+    if(key=='a'|| key=='A'){
+        leftKey=true;
+    }
+    if(key=='d' || key=='D'){
+        rightKey=true;
+    }
+    if(key==' '){
+        if(!gameOver && !playerWon){
+            Bullet bullet;
+            bullet.x=playerX;
+            bullet.y=playerY+35;
+            bullets.push_back(bullet);
+        }
+    }
+    if(key=='r' || key=='R'){
+        playerX=WIDTH/2;
+        health=MAX_HEALTH;
+        score=0;
+        bullets.clear();
+        enemies.clear();
+        gameOver=false;
+        playerWon=false;
+    }
 }
 void keyUp(unsigned char key,int x,int y){
 
