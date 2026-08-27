@@ -54,12 +54,81 @@ void circle(float x,float y,float r){
 
 // player spaceship
 void drawPlayer(){
+    glPushMatrix();
+    glTranslatef(playerX,playerY,0);
 
+    glColor3f(0.2f, 0.7f, 1.0f);
+    glBegin(GL_TRIANGLES);
+    glVertex2f(0, 40);
+    glVertex2f(-30, -20);
+    glVertex2f(30, -20);
+    glEnd();
+
+    glColor3f(0.1f, 0.4f, 0.9f);
+    glBegin(GL_TRIANGLES);
+    glVertex2f(-18, 0);
+    glVertex2f(-45, -20);
+    glVertex2f(-15, -15);
+    glEnd();
+
+    glBegin(GL_TRIANGLES);
+    glVertex2f(18, 0);
+    glVertex2f(45, -20);
+    glVertex2f(15, -15);
+    glEnd();
+
+    glColor3f(0.8f, 0.95f, 1.0f);
+    circle(0, 10, 9);
+
+    glColor3f(1.0f, 0.5f, 0.1f);
+    glBegin(GL_TRIANGLES);
+    glVertex2f(-10, -18);
+    glVertex2f(0, -35);
+    glVertex2f(10, -18);
+    glEnd();
+
+    glPopMatrix();
 }
 
 // enemy spaceship
 void drawEnemy(float x,float y){
+    glPushMatrix();
+    glTranslatef(x, y, 0);
 
+    glScalef(0.65f, 0.65f, 1.0f);
+    glRotatef(180.0f, 0, 0, 1);
+
+    glColor3f(1.0f, 0.15f, 0.15f);
+    glBegin(GL_TRIANGLES);
+    glVertex2f(0, 40);
+    glVertex2f(-30, -20);
+    glVertex2f(30, -20);
+    glEnd();
+
+    glColor3f(0.75f, 0.05f, 0.05f);
+    glBegin(GL_TRIANGLES);
+    glVertex2f(-18, 0);
+    glVertex2f(-45, -20);
+    glVertex2f(-15, -15);
+    glEnd();
+
+    glBegin(GL_TRIANGLES);
+    glVertex2f(18, 0);
+    glVertex2f(45, -20);
+    glVertex2f(15, -15);
+    glEnd();
+
+    glColor3f(1.0f, 0.8f, 0.2f);
+    circle(0, 10, 9);
+
+    glColor3f(0.8f, 0.05f, 0.05f);
+    glBegin(GL_TRIANGLES);
+    glVertex2f(-10, -18);
+    glVertex2f(0, -35);
+    glVertex2f(10, -18);
+    glEnd();
+
+    glPopMatrix();
 }
 
 // bullet
@@ -69,7 +138,7 @@ void drawBullet(float x,float y){
 
 // bg
 void drawStars(){
-    // abracadabra i love you maisha 
+    // abracadabra i love you maisha
 }
 
 void drawHealth(){
@@ -105,7 +174,70 @@ void display(){
 
 // updates
 void update(int value){
+    if(!gameOver && !playerWon){
+        if (leftKey) playerX-=7;
+        if (rightKey) playerX+=7;
 
+        if (playerX<45) playerX=45;
+        if (playerX>WIDTH-45) playerX=WIDTH-45;
+
+        for (int i=0;i<bullets.size();i++) bullets[i].y+=10;
+
+        for (int i=0;i<enemies.size();i++) enemies[i].y-=2;
+
+        for (int i=bullets.size()-1;i>=0;i--){
+            bool bulletDestroyed=false;
+            for (int j=enemies.size()-1;j>=0;j--){
+                float dx=bullets[i].x-enemies[j].x;
+                float dy=bullets[i].y-enemies[j].y;
+                float distance=sqrt(dx*dx+dy*dy);
+
+                if (distance<30){
+                    bullets.erase(bullets.begin()+i);
+                    enemies.erase(enemies.begin()+j);
+
+                    score++;
+                    bulletDestroyed=true;
+                    break;
+                }
+            }
+            if (bulletDestroyed) continue;
+        }
+
+        for (int i=enemies.size()-1;i>=0;i--){
+            float dx=enemies[i].x-playerX;
+            float dy=enemies[i].y-playerY;
+            float distance=sqrt(dx*dx+dy*dy);
+
+            if (distance<45){
+                enemies.erase(enemies.begin()+i);
+                health-=5;
+                if(health<=0){
+                    health=0;
+                    gameOver=true;
+                }
+            }
+        }
+
+        for (int i=bullets.size()-1;i>=0;i--){
+            if (bullets[i].y>HEIGHT) bullets.erase(bullets.begin()+i);
+        }
+        for (int i=enemies.size()-1;i>=0;i--){
+            if(enemies[i].y<-50) enemies.erase(enemies.begin()+i);
+        }
+
+
+        if(rand()%35==0){
+            Enemy enemy;
+            enemy.x=50+rand()%(WIDTH-100);
+            enemy.y=HEIGHT+40;
+            enemies.push_back(enemy);
+        }
+
+        if(score>=WIN_SCORE) playerWon=true;
+    }
+     glutPostRedisplay();
+     glutTimerFunc(16,update,0);
 }
 void keyDown(unsigned char key,int x,int y){
     if(key=='a'|| key=='A'){
