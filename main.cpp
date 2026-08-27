@@ -140,10 +140,15 @@ void keyUp(unsigned char key,int x,int y){
         rightKey=false;
     }
 }
-
 void specialDown(int key,int x,int y){
-
+    if(key==GLUT_KEY_LEFT){
+        leftKey=true;
+    }
+    if(key==GLUT_KEY_RIGHT){
+        rightKey=true;
+    }
 }
+
 void specialUp(int key,int x,int y){
 
 }
