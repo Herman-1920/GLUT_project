@@ -313,6 +313,15 @@ void update(int value){
      glutPostRedisplay();
      glutTimerFunc(16,update,0);
 }
+void autoBullet(int value){
+    if(!gameOver && !playerWon){
+        Bullet bullet;
+        bullet.x=playerX;
+        bullet.y=playerY+35;
+        bullets.push_back(bullet);
+    }
+    glutTimerFunc(300, autoBullet,0);
+}
 void keyDown(unsigned char key,int x,int y){
     if(key=='a'|| key=='A'){
         leftKey=true;
@@ -393,7 +402,7 @@ int main(int argc,char** argv){
     glutSpecialUpFunc(specialUp);
 
     glutTimerFunc(16,update,0);
-
+    glutTimerFunc(300,autoBullet,0);
     glutMainLoop();
 
     return 0;
