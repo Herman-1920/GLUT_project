@@ -148,9 +148,13 @@ void specialDown(int key,int x,int y){
         rightKey=true;
     }
 }
-
 void specialUp(int key,int x,int y){
-
+    if(key==GLUT_KEY_LEFT){
+        leftKey=false;
+    }
+    if(key==GLUT_KEY_RIGHT){
+        rightKey=false;
+    }
 }
 
 // initialization
