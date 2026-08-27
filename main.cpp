@@ -133,12 +133,28 @@ void drawEnemy(float x,float y){
 
 // bullet
 void drawBullet(float x,float y){
+    glColor3f(1.0f, 1.0f, 0.2f);
+    glBegin(GL_QUADS);
+    glVertex2f(x - 3, y);
+    glVertex2f(x + 3, y);
+    glVertex2f(x + 3, y + 15);
+    glVertex2f(x - 3, y + 15);
 
+    glEnd();
 }
-
-// bg
+    
 void drawStars(){
-    // abracadabra i love you maisha
+    glColor3f(1.0f, 1.0f, 1.0f);
+    for(int i=0;i<100;i++){
+        float x = (i*97)% WIDTH;
+        float y = (i*53)% HEIGHT;
+        
+        glBegin(GL_POINTS);
+
+        glVertex2f(x, y);
+
+        glEnd();
+    }
 }
 
 void drawHealth(){
@@ -169,7 +185,65 @@ void drawHealth(){
 
 // display
 void display(){
+    glClear(GL_COLOR_BUFFER_BIT);
+    drawStars();
 
+    if(!gameOver && !playerWon){
+        drawPlayer();
+
+        for (int i = 0; i < bullets.size(); i++)
+        {
+            drawBullet(
+                bullets[i].x,
+                bullets[i].y
+            );
+    }
+    for (int i = 0; i < enemies.size(); i++)
+        {
+            drawEnemy(
+                enemies[i].x,
+                enemies[i].y
+            );
+        }
+    }
+    drawHealth();
+    glColor3f(1, 1, 1);
+
+    char text[50];
+
+    sprintf(text, "Score: %d / %d", score, WIN_SCORE);
+    glRasterPos2f(WIDTH - 180, HEIGHT - 30);
+
+    for (int i = 0; text[i] != '\0'; i++){
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18,
+            text[i]);
+    }
+    if(gameOver){
+        const char* message =
+          "GAME OVER - Press R to Restart";
+        glRasterPos2f(270, 300);
+
+        for (int i = 0; message[i] != '\0'; i++)
+        {
+            glutBitmapCharacter(
+                GLUT_BITMAP_HELVETICA_18,
+                message[i]
+            );
+        }
+    }
+    if(playerWon){
+        const char* message =
+            "YOU WIN! - Press R to Play Again";
+
+        glRasterPos2f(260, 300);
+        for(int i = 0;message[i]!='\0';i++){
+             glutBitmapCharacter(
+                GLUT_BITMAP_HELVETICA_18,
+                message[i]
+            );
+        }
+    }
+    glutSwapBuffers();
 }
 
 // updates
@@ -316,7 +390,7 @@ int main(int argc,char** argv){
     glutKeyboardFunc(keyDown);
     glutKeyboardUpFunc(keyUp);
     glutSpecialFunc(specialDown);
-    glutSpecialFunc(specialUp);
+    glutSpecialUpFunc(specialUp);
 
     glutTimerFunc(16,update,0);
 
