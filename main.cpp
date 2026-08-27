@@ -76,24 +76,24 @@ void drawHealth(){
     glColor3f(0.25f,0.25f,0.25f);
     glBegin(GL_QUADS);
     glVertex2f(20,HEIGHT-30);
-    glVertex2f(220,HEIGHT- 30);
-    glVertex2f(220,HEIGHT- 10);
-    glVertex2f(20,HEIGHT- 10);
+    glVertex2f(220,HEIGHT-30);
+    glVertex2f(220,HEIGHT-10);
+    glVertex2f(20,HEIGHT-10);
     glEnd();
 
     float healthWidth=200.0f*health/MAX_HEALTH;
     glColor3f(0.1f,0.9f,0.2f);
     glBegin(GL_QUADS);
-    glVertex2f(20,HEIGHT - 30);
-    glVertex2f(20+healthWidth,HEIGHT- 30);
-    glVertex2f(20+healthWidth,HEIGHT- 10);
-    glVertex2f(20,HEIGHT- 10);
+    glVertex2f(20,HEIGHT-30);
+    glVertex2f(20+healthWidth,HEIGHT-30);
+    glVertex2f(20+healthWidth,HEIGHT-10);
+    glVertex2f(20,HEIGHT-10);
     glEnd();
     glColor3f(1,1,1);
     char t[50];
     sprintf(t,"Health: %d",health);
-    glRasterPos2f(20,HEIGHT- 50);
-    for (int i =0;t[i] !='\0';i++){
+    glRasterPos2f(20,HEIGHT-50);
+    for (int i=0;t[i]!='\0';i++){
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_12,t[i]);
     }
 }
