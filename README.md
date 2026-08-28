@@ -25,7 +25,7 @@ The project was developed using following components.
 =======
 ## **Output**
 
-After successfully executing the code, in our outputs we can see that everything appears perfectly. The blue spaceship can move left and right by the left and right arrow keys. It can also move left and right with the A and D keys. Every time we press the spacebar, the blue spaceship fires a bullet. And the enemy spaceship coming from the top to the bottom. When these spaceship hit the blue spaceship. The blue spaceship loses it health point by 5. When the bullet fired from blue spaceship hit the enemy spaceship, the enemy spaceship disappears from screen.
+After successfully executing the code, in our outputs we can see that everything appears perfectly. The blue spaceship appears in the bottom and the enemy spaceship coming from the top to the bottom. We can also see the health bar appears at the top left and the scorecard at the top right.
 
 ## **Output Screenshot**
 
